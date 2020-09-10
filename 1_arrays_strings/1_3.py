@@ -35,4 +35,3 @@ if __name__ == '__main__':
     print(urlfy(list('my first test    ')))
     print(urlfy(list(' myfirsttest  ')))
     print(urlfy(list('m y f i r s t t e s t                    ')))
-

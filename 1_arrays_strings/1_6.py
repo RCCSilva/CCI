@@ -1,31 +1,41 @@
-def compress(s: str) -> str:
-    if len(s) < 2:
-        return s
+import string
 
-    string = list(s)
 
-    i = 0
-    j = 1
 
-    c = 1
-    b = string[i]
-
-    while j < len(string) - 1 and i < len(string) - 1:
-        while string[j] == b and j < len(string) - 1:
-            j += 1
-            c += 1
-        string[i] = b
-        b = string[j]    
-        i += 1
-        string[i] = str(c)
-        i += 1
-        c = 1
-    
-    if i == j:
-        return s
+def add_or_increment(char: str, m: dict) -> dict:
+    if char not in m:
+        m[char] = 1
     else:
-        return ''.join(string[:i])
+        m[char] += 1
+
+    return m
+
+
+def compress(st: str) -> str:
+    char_amount = {}
+
+    for char in st:
+        char_amount = add_or_increment(char, char_amount)
+
+    summ = 0
+
+    for amount in char_amount.values():
+        summ += (2 - amount)
+
+    if summ >= 0:
+        return st
+
+    response = []
+
+    for char in string.ascii_lowercase:
+        if char in char_amount:
+            response.append(char + str(char_amount[char]))
+
+    return ''.join(response)
+    
 
 if __name__ == '__main__':
     print(compress('aaaaaabbcccccccccccccccccc'))
     print(compress('ab'))
+    print(compress('qwertyuiopasdfghjklc'))
+    print(compress('abcdddddd'))
